@@ -9,7 +9,7 @@ namespace MisFinanzas.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(MisFinanzas.Context.FinanzasContext context)

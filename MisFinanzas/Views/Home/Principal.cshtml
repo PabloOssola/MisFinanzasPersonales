@@ -97,7 +97,7 @@
                     <!-- /.dropdown-tasks -->
                 </li>
                 <li class="bottom">
-                    <a class="bottom" href="#">
+                    <a class="bottom" href="#importarExcel" onclick="importarExcel()">
                         <i class="fa fa-file-excel-o fa-fw"></i>
                     </a> 
                 </li>
@@ -299,6 +299,21 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="Importar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content col-xs-8">
+                    <div class="modal-header">
+                        <div class="col-xs-12 form-group">
+                            <label for="ImportarResumen" style="text-align:center">Importar Resumen Tarjetas</label>
+                            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="modelContentImportar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div> 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script> 
     <script src="~/Scripts/bootstrap.min.js"></script> 
@@ -313,7 +328,13 @@
             $modal.load("@Url.Action("SetearPorcentajes", "Home")", function () {
                 $('#myModal').modal('show');
             });
-        }         
+        }
+        function importarExcel() {
+            var $modal = $('#modelContentImportar');
+            $modal.load("@Url.Action("Importar", "Gasto")", function () {
+                $('#Importar').modal('show');
+            });
+        }
     </script>
 
 </body>

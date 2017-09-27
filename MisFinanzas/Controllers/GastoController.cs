@@ -1,5 +1,6 @@
 ﻿using MisFinanzas.Helpers;
 using MisFinanzas.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,5 +42,39 @@ namespace MisFinanzas.Controllers
             List<Gasto> gastos = helper.getByIdPersona(idPersona);
             return View(gastos);
         }
+
+        public ActionResult Importar()
+        {
+            return PartialView("Importar");
+        }
+
+        [HttpPost]
+        public ActionResult ImportarExcel(string model)
+        {
+            List<GastosSerializados> list = JsonConvert.DeserializeObject<List<GastosSerializados>>(model);
+            List<Gasto> gastos = new List<Gasto>();
+
+            foreach (GastosSerializados gastoTarjeta in list)
+            {
+                Gasto nuevoGasto = new Gasto();
+                nuevoGasto.Descripcion = gastoTarjeta.Descripcion;
+                nuevoGasto.FechaGasto = gastoTarjeta.FechaGasto;
+                nuevoGasto.GrupoGasto = null;
+                nuevoGasto.IdPersona = (int)Session["PersonaId"];
+                nuevoGasto.monto = gastoTarjeta.Importe;
+                gastos.Add(nuevoGasto);
+            }
+            //Se supone que el que importa el excel es el dueño del archivo de gastos de la tarjeta
+
+            return PartialView("Gasto", gastos);
+        }
+    }
+
+    internal class GastosSerializados
+    {
+        public String Descripcion { get; set; }
+        public Decimal Importe { get; set; }
+        public DateTime FechaGasto { get; set; }
+
     }
 }
